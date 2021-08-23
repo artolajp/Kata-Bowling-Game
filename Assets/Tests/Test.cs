@@ -33,7 +33,7 @@ public class Test
     public void frameHasTwoBalls()
     {
         Frame frame = new Frame();
-        Assert.AreEqual(2, frame.BallsCount);
+        Assert.AreEqual(2, frame.balls.Length);
     }
 
     //si en un turno el jugador no tira los 10 bolos,
@@ -43,7 +43,24 @@ public class Test
     {
         Frame frame = new Frame();
 
-        Assert.AreEqual(8, frame.KnockedDownCount);
+        frame.KnockDown(8);
+
+        Assert.AreEqual(8, frame.Score);
+    }
+
+    //si en un turno el jugador tira los 10 bolos (un spare)
+    //la puntuación es 10 más el número de bolos tirados en la siguiente tirada (del siguiente turno)
+    [Test]
+    public void scoreIsTenPlusNextFrameScoreWhenPinsCountIsTen() {
+        Frame frame = new Frame();
+        Frame frame2 = new Frame();
+
+        frame.NextFrame = frame2;
+        frame.KnockDown(10);
+        frame2.KnockDown(2);
+
+        Assert.AreEqual(12, frame.Score);
+
     }
 
 }
