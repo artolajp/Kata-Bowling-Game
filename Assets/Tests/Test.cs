@@ -15,7 +15,7 @@ public class Test
         //when
         Game game = new Game();
         //then
-        Assert.AreEqual(10, game.turns.Count);
+        Assert.AreEqual(10, game.Turns.Count);
     }
 
     //hay 10 bolos que se intentan tirar en cada turno
