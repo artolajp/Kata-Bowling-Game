@@ -10,12 +10,14 @@ public class Frame
 
     private int currentBall = 0;
 
-    public int Score { 
+    public int Score {
         get {
             int score = balls[0] + balls[1];
-            if (balls[0] == 10) {
+            if (NextFrame == null) {
+                return score;
+            } else if (balls[0] == PinsCount) {
                 return score + NextFrame.Score;
-            } else if (score == 10) {
+            } else if (score == PinsCount) {
                 return score + NextFrame.balls[0];
             } else {
                 return score;
@@ -23,8 +25,7 @@ public class Frame
         }
     }
 
-    public Frame()
-    {
+    public Frame() {
         balls = new int[BallsCount];
     }
 
@@ -33,5 +34,11 @@ public class Frame
             balls[currentBall] = knockedDownPins;
         }
         currentBall++;
+        if (NextFrame == null && currentBall == 2 && Score == PinsCount && BallsCount < 3) {
+            BallsCount++;
+            Array.Resize(ref balls, BallsCount);
+            var length = balls.Length;
+
+        }
     }
 }

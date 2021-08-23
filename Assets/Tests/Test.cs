@@ -79,4 +79,18 @@ public class Test
         Assert.AreEqual(14, frame.Score);
     }
 
+    //si el jugador logra un spare o un strike en el último turno,
+    //obtiene una o dos tiradas más (respectivamente) de bonificación.
+    //Esas tiradas cuentan como parte del mismo turno (el décimo).
+    [Test]
+    public void whenIsLastFrameAndWasSparePlayerHasOneMoreBall() {
+        Frame lastFrame = new Frame();
+
+        lastFrame.KnockDown(5);
+        lastFrame.KnockDown(5);
+
+        Assert.AreEqual(3, lastFrame.balls.Length);
+    }
+
+
 }
