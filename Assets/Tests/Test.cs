@@ -6,6 +6,7 @@ using UnityEngine.TestTools;
 
 public class Test
 {
+
     //cada partida se compone de 10 turnos
     [Test]
     public void gameHasTenFrames()
@@ -67,21 +68,40 @@ public class Test
     //si en la primera tirada del turno tira los 10 bolos (un strike)
     //el turno acaba y la puntuación es 10 más el número de bolos de las 2 jugadas siguientes
     [Test]
-    public void scoreIsTenPlusNextFrameScoreOntrike() {
+    public void scoreIsTenPlusNextFrameScoreOnStrike() {
         Frame frame = new Frame();
         Frame frame2 = new Frame();
 
         frame.NextFrame = frame2;
         frame.KnockDown(10);
-        frame2.KnockDown(2);
-        frame2.KnockDown(2);
+        frame2.KnockDown(1);
+        frame2.KnockDown(3);
 
         Assert.AreEqual(14, frame.Score);
+    }
+
+    [Test]
+    public void scoreIsTenPlusNextTwoBallsScoreOnTwoStrikes()
+    {
+        Frame frame = new Frame();
+        Frame frame2 = new Frame();
+        Frame frame3 = new Frame();
+
+        frame.NextFrame = frame2;
+        frame2.NextFrame = frame3;
+        frame.KnockDown(10);
+        frame2.KnockDown(10);
+        frame3.KnockDown(2);
+        frame3.KnockDown(2);
+
+
+        Assert.AreEqual(22, frame.Score);
     }
 
     //si el jugador logra un spare o un strike en el último turno,
     //obtiene una o dos tiradas más (respectivamente) de bonificación.
     //Esas tiradas cuentan como parte del mismo turno (el décimo).
+    //SPARE
     [Test]
     public void whenIsLastFrameAndWasSparePlayerHasOneMoreBall() {
         Frame lastFrame = new Frame();
@@ -92,5 +112,46 @@ public class Test
         Assert.AreEqual(3, lastFrame.balls.Length);
     }
 
+    //si el jugador logra un spare o un strike en el último turno,
+    //obtiene una o dos tiradas más (respectivamente) de bonificación.
+    //Esas tiradas cuentan como parte del mismo turno (el décimo).
+    //STRIKE
+    [Test]
+    public void whenIsLastFrameAndWasStrikePlayerHasTwoMoreBalls()
+    {
+        Frame lastFrame = new Frame();
+
+        lastFrame.KnockDown(10);
+
+        Assert.AreEqual(3, lastFrame.balls.Length);
+    }
+    //Si en las tiradas de bonificación el jugador derriba todos los bolos,
+    //el proceso no se repite, es decir que no se vuelven a generar más
+    //lanzamientos de  bonificación.
+    [Test]
+    public void whenIsLastFrameAndHasTwoStrikesHasNotMoreBalls()
+    {
+        Frame lastFrame = new Frame();
+
+        lastFrame.KnockDown(10);
+        lastFrame.KnockDown(10);
+
+        Assert.AreEqual(3, lastFrame.balls.Length);
+    }
+
+    [Test]
+    public void whenIsLastFrameAndHasStrikeAndSpareHasNotMoreBalls()
+    {
+        Frame lastFrame = new Frame();
+
+        lastFrame.KnockDown(10);
+        lastFrame.KnockDown(0);
+        lastFrame.KnockDown(10);
+
+        Assert.AreEqual(3, lastFrame.balls.Length);
+    }
+
+    //Nota: el puntaje generado en las tiradas de bonificación se suma
+    //a la  puntuación del turno final.
 
 }

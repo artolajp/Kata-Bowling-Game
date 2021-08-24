@@ -16,9 +16,9 @@ public class Frame
             if (NextFrame == null) {
                 return score;
             } else if (balls[0] == PinsCount) {
-                return score + NextFrame.Score;
+                return score + NextBallScore() + NextSecondBallScore() ;
             } else if (score == PinsCount) {
-                return score + NextFrame.balls[0];
+                return score + NextBallScore();
             } else {
                 return score;
             }
@@ -34,11 +34,32 @@ public class Frame
             balls[currentBall] = knockedDownPins;
         }
         currentBall++;
-        if (NextFrame == null && currentBall == 2 && Score == PinsCount && BallsCount < 3) {
+        if (NextFrame == null && currentBall < 3 && Score == PinsCount && BallsCount < 3) {
             BallsCount++;
             Array.Resize(ref balls, BallsCount);
-            var length = balls.Length;
-
         }
+    }
+
+    public int NextBallScore()
+    {
+        if (NextFrame == null)
+        {
+            return 0;
+        }
+        if (balls[0] < PinsCount)
+        {
+            return balls[1];
+        }
+        return NextFrame.balls[0];
+    }
+
+    public int NextSecondBallScore()
+    {
+        if (NextFrame.balls[0] < PinsCount)
+        {
+            return NextFrame.balls[1];
+        }
+        return NextFrame.NextBallScore();
+
     }
 }
