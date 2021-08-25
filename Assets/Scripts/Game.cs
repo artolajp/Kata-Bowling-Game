@@ -2,7 +2,7 @@
 
 public class Game
 {
-    private int FramesCount = 10;
+    private const int FRAMES_COUNT = 10;
     public Frame[] frames;
 
     public int CurrentFrame { get; set; }
@@ -16,13 +16,18 @@ public class Game
         return sum;
     }}
 
-    public bool IsFinished { get { return frames[frames.Length - 1].isFinished; } }
+    public bool IsFinished { get { return frames[frames.Length - 1].IsFinished; } }
 
     public Game()
     {
-        frames = new Frame[FramesCount];
+        frames = new Frame[FRAMES_COUNT];
+        InitFrames();
+    }
+
+    private void InitFrames()
+    {
         Frame lastFrame = null;
-        for (int index = 0; index < FramesCount; index++)
+        for (int index = 0; index < FRAMES_COUNT; index++)
         {
             Frame newFrame = new Frame();
             if (lastFrame != null) lastFrame.NextFrame = newFrame;
@@ -34,6 +39,6 @@ public class Game
     public void Roll(int knockedDown)
     {
         frames[CurrentFrame].KnockDown(knockedDown);
-        if (frames[CurrentFrame].isFinished) CurrentFrame++;
+        if (frames[CurrentFrame].IsFinished) CurrentFrame++;
     }
 }

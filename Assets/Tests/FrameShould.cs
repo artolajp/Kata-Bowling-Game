@@ -12,9 +12,7 @@ public class FrameShould
     [Test]
     public void Has_TenPins()
     {
-        Frame frame = new Frame();
-
-        Assert.AreEqual(10,frame.PinsCount);
+        Assert.AreEqual(10,Frame.PINS_COUNT);
     }
 
     //en cada turno el jugador hace 2 tiradas
@@ -22,7 +20,7 @@ public class FrameShould
     public void Has_TwoBalls()
     {
         Frame frame = new Frame();
-        Assert.AreEqual(2, frame.balls.Length);
+        Assert.AreEqual(2, frame.Balls.Length);
     }
 
     //si en un turno el jugador no tira los 10 bolos,
@@ -47,10 +45,10 @@ public class FrameShould
         frame1.NextFrame = frame2;
         frame1.KnockDown(8);
         frame1.KnockDown(2);
-        frame2.KnockDown(2);
-        frame2.KnockDown(2);
+        frame2.KnockDown(3);
+        frame2.KnockDown(5);
 
-        Assert.AreEqual(12, frame1.Score);
+        Assert.AreEqual(13, frame1.Score);
     }
 
     //si en la primera tirada del turno tira los 10 bolos (un strike)
@@ -97,7 +95,7 @@ public class FrameShould
         lastFrame.KnockDown(5);
         lastFrame.KnockDown(5);
 
-        Assert.AreEqual(3, lastFrame.balls.Length);
+        Assert.AreEqual(3, lastFrame.Balls.Length);
     }
 
     //si el jugador logra un spare o un strike en el último turno,
@@ -111,7 +109,7 @@ public class FrameShould
 
         lastFrame.KnockDown(10);
 
-        Assert.AreEqual(3, lastFrame.balls.Length);
+        Assert.AreEqual(3, lastFrame.Balls.Length);
     }
     //Si en las tiradas de bonificación el jugador derriba todos los bolos,
     //el proceso no se repite, es decir que no se vuelven a generar más
@@ -124,7 +122,7 @@ public class FrameShould
         lastFrame.KnockDown(10);
         lastFrame.KnockDown(10);
 
-        Assert.AreEqual(3, lastFrame.balls.Length);
+        Assert.AreEqual(3, lastFrame.Balls.Length);
     }
 
     [Test]
@@ -136,7 +134,7 @@ public class FrameShould
         lastFrame.KnockDown(0);
         lastFrame.KnockDown(10);
 
-        Assert.AreEqual(3, lastFrame.balls.Length);
+        Assert.AreEqual(3, lastFrame.Balls.Length);
     }
 
     //Nota: el puntaje generado en las tiradas de bonificación se suma
@@ -162,7 +160,7 @@ public class FrameShould
 
         frame1.KnockDown(10);
 
-        Assert.AreEqual(1, frame1.balls.Length);
+        Assert.AreEqual(1, frame1.Balls.Length);
     }
 
 }

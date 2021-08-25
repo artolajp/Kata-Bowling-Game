@@ -2,72 +2,85 @@
 
 public class Frame
 {
-    public int PinsCount = 10;
-    private int BallsCount = 2;
+    public const int PINS_COUNT = 10;
+    private const int BALLS_COUNT = 2;
 
-    public int[] balls;
+    private int[] balls;
+    public int[] Balls { get => balls; set => balls = value; }
     public Frame NextFrame { get; set; }
 
-    public bool isFinished;
+    private bool isFinished;
+    public bool IsFinished { get => isFinished; private set => isFinished = value; }
+    public bool IsLastFrame { get => NextFrame == null; }
+    public bool IsStrike { get => Balls[0] == PINS_COUNT; }
+    public bool IsSpare { get => Balls[0]+ Balls[1] == PINS_COUNT && !IsStrike; }
 
     private int currentBall = 0;
 
     public int Score {
-        get {
-            int score = 0;
-            foreach (var ball in balls)
+        get
+        {
+            int score = SumScore();
+            if (!IsLastFrame && IsStrike)
             {
-                score += ball;
+                return score + NextBallScore() + NextSecondBallScore();
             }
-            if (NextFrame == null) {
-                return score;
-            } else if (balls[0] == PinsCount) {
-                return score + NextBallScore() + NextSecondBallScore() ;
-            } else if (score == PinsCount) {
+            else if (!IsLastFrame && IsSpare)
+            {
                 return score + NextBallScore();
-            } else {
-                return score;
             }
+            return score;
+
         }
     }
 
+    private int SumScore()
+    {
+        int sum = 0;
+        foreach (var ball in Balls)
+        {
+            sum += ball;
+        }
+
+        return sum;
+    }
+
     public Frame() {
-        balls = new int[BallsCount];
+        Balls = new int[BALLS_COUNT];
     }
 
     public void KnockDown(int knockedDownPins) {
-        if (currentBall < balls.Length) {
-            balls[currentBall] = knockedDownPins;
-            if(NextFrame != null && Score == PinsCount) {
-                Array.Resize(ref balls, currentBall + 1);
+        if (currentBall < Balls.Length) {
+            Balls[currentBall] = knockedDownPins;
+            if(!IsLastFrame && IsStrike) {
+                Array.Resize(ref balls, 1);
             }
         }
         currentBall++;
 
-        if (NextFrame == null && currentBall < 3 && Score == PinsCount && BallsCount < 3) {
-            BallsCount++;
-            Array.Resize(ref balls, BallsCount);
+        if (IsLastFrame && (IsStrike || IsSpare) && Balls.Length < 3) {
+            Array.Resize(ref balls, BALLS_COUNT+1);
         }
 
-        isFinished = currentBall >= balls.Length;
+        IsFinished = currentBall >= Balls.Length;
     }
 
     public int NextBallScore()
     {
-        if (NextFrame == null || balls[0] < PinsCount) 
+        if (IsLastFrame) 
         {
-            return balls[1];
+            return Balls[1];
         }
-        return NextFrame.balls[0];
+        return NextFrame.Balls[0];
     }
 
     public int NextSecondBallScore()
     {
-        if (NextFrame.balls[0] < PinsCount)
+        if (NextFrame.IsStrike)
         {
-            return NextFrame.balls[1];
+            return NextFrame.NextBallScore();
         }
-        return NextFrame.NextBallScore();
+        return NextFrame.Balls[1];
 
     }
 }
