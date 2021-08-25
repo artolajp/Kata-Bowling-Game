@@ -8,11 +8,17 @@ public class Frame
     public int[] balls;
     public Frame NextFrame { get; set; }
 
+    public bool isFinished;
+
     private int currentBall = 0;
 
     public int Score {
         get {
-            int score = balls[0] + balls[1];
+            int score = 0;
+            foreach (var ball in balls)
+            {
+                score += ball;
+            }
             if (NextFrame == null) {
                 return score;
             } else if (balls[0] == PinsCount) {
@@ -38,6 +44,7 @@ public class Frame
             BallsCount++;
             Array.Resize(ref balls, BallsCount);
         }
+        isFinished = currentBall >= balls.Length;
     }
 
     public int NextBallScore()

@@ -4,20 +4,8 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-public class Test
+public class FrameShould
 {
-
-    //cada partida se compone de 10 turnos
-    [Test]
-    public void gameHasTenFrames()
-    {
-        //given
-        
-        //when
-        Game game = new Game();
-        //then
-        Assert.AreEqual(10, game.frames.Length);
-    }
 
     //hay 10 bolos que se intentan tirar en cada turno
 
@@ -153,5 +141,17 @@ public class Test
 
     //Nota: el puntaje generado en las tiradas de bonificación se suma
     //a la  puntuación del turno final.
+
+    [Test]
+    public void whenIsLastFrameAndHasBonusTheScoreIsAddedToFinalFrameScore()
+    {
+        Frame lastFrame = new Frame();
+
+        lastFrame.KnockDown(10);
+        lastFrame.KnockDown(0);
+        lastFrame.KnockDown(10);
+
+        Assert.AreEqual(20, lastFrame.Score);
+    }
 
 }
