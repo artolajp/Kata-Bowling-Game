@@ -149,4 +149,15 @@ public class GameShould
 
         Assert.AreEqual(150, game.Score);
     }
+
+    [Test]
+    public void BeFinished_When_LastFrameIsFinished() {
+        Game game = new Game();
+
+        for (int i = 0; i < 12; i++) {
+            game.Roll(10);
+        }
+
+        Assert.IsTrue(game.IsFinished);
+    }
 }

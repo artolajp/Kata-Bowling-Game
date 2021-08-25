@@ -16,6 +16,8 @@ public class Game
         return sum;
     }}
 
+    public bool IsFinished { get { return frames[frames.Length - 1].isFinished; } }
+
     public Game()
     {
         frames = new Frame[FramesCount];
