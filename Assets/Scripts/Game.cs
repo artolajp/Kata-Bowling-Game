@@ -29,7 +29,7 @@ public class Game
         }
     }
 
-    public void ThrowBall(int knockedDown)
+    public void Roll(int knockedDown)
     {
         frames[CurrentFrame].KnockDown(knockedDown);
         if (frames[CurrentFrame].isFinished) CurrentFrame++;

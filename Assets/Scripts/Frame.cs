@@ -38,22 +38,23 @@ public class Frame
     public void KnockDown(int knockedDownPins) {
         if (currentBall < balls.Length) {
             balls[currentBall] = knockedDownPins;
+            if(NextFrame != null && Score == PinsCount) {
+                Array.Resize(ref balls, currentBall + 1);
+            }
         }
         currentBall++;
+
         if (NextFrame == null && currentBall < 3 && Score == PinsCount && BallsCount < 3) {
             BallsCount++;
             Array.Resize(ref balls, BallsCount);
         }
+
         isFinished = currentBall >= balls.Length;
     }
 
     public int NextBallScore()
     {
-        if (NextFrame == null)
-        {
-            return 0;
-        }
-        if (balls[0] < PinsCount)
+        if (NextFrame == null || balls[0] < PinsCount) 
         {
             return balls[1];
         }

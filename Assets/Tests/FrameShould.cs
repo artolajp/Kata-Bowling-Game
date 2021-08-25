@@ -154,4 +154,15 @@ public class FrameShould
         Assert.AreEqual(20, lastFrame.Score);
     }
 
+    [Test]
+    public void Has_OneBall_IfIsStrike() {
+        Frame frame1 = new Frame();
+        Frame frame2 = new Frame();
+        frame1.NextFrame = frame2;
+
+        frame1.KnockDown(10);
+
+        Assert.AreEqual(1, frame1.balls.Length);
+    }
+
 }
