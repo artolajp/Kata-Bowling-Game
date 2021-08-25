@@ -8,7 +8,7 @@ public class GameShould
 {
     //cada partida se compone de 10 turnos
     [Test]
-    public void HasTenFrames()
+    public void Has_TenFrames()
     {
         //given
         Game game = new Game();
@@ -19,7 +19,7 @@ public class GameShould
     }
 
     [Test]
-    public void HasNextFrameForEachFrameWhenIsNotTheLastOne()
+    public void Has_NextFrame_ForEachFrame_WhenIsNotTheLastOne()
     {
         //Given
         Game game = new Game();
@@ -33,7 +33,7 @@ public class GameShould
     }
 
     [Test]
-    public void HasLastFrameWithoutNextFrame()
+    public void Has_LastFrame_WithoutNextFrame()
     {
         //Given
         Game game = new Game();
@@ -44,7 +44,7 @@ public class GameShould
     }
 
     [Test]
-    public void HasNoScoreWhenStart()
+    public void HasNot_Score_AtBeginning()
     {
         Game game = new Game();
 
@@ -52,7 +52,7 @@ public class GameShould
     }
 
     [Test]
-    public void HasScoreEqualToFirstFrameBallsWhenNoStrike()
+    public void Has_Score_EqualTo_FirstFrameBalls_WhenNoStrike()
     {
         Game game = new Game();
         game.ThrowBall(6);
@@ -61,7 +61,7 @@ public class GameShould
     }
 
     [Test]
-    public void HasScoreEqualToAllFrameBallsWhenNoStrikeAndNoSpare()
+    public void Has_Score_Equals_AllFrameBalls_WhenNoStrikesOrSpares()
     {
         Game game = new Game();
         game.ThrowBall(6);
@@ -71,7 +71,7 @@ public class GameShould
     }
 
     [Test]
-    public void HasScoreEqualToAllFrameScoresWhenNoStrikesOrSpares()
+    public void Has_Score_EqualTo_AllFrameScores_WhenNoStrikesOrSpares()
     {
         Game game = new Game();
         game.ThrowBall(6);
@@ -85,7 +85,7 @@ public class GameShould
     }
 
     [Test]
-    public void HasScoreEqualToAllFrameScoresPlusStrikeScoreWhenStrikes()
+    public void Has_Score_EqualTo_AllFrameScoresPlusStrikeScore_WhenStrikes()
     {
         Game game = new Game();
         game.ThrowBall(6);

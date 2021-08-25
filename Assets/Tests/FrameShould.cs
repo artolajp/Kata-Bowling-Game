@@ -10,7 +10,7 @@ public class FrameShould
     //hay 10 bolos que se intentan tirar en cada turno
 
     [Test]
-    public void frameHasTenPins()
+    public void Has_TenPins()
     {
         Frame frame = new Frame();
 
@@ -19,7 +19,7 @@ public class FrameShould
 
     //en cada turno el jugador hace 2 tiradas
     [Test]
-    public void frameHasTwoBalls()
+    public void Has_TwoBalls()
     {
         Frame frame = new Frame();
         Assert.AreEqual(2, frame.balls.Length);
@@ -28,7 +28,7 @@ public class FrameShould
     //si en un turno el jugador no tira los 10 bolos,
     //la puntuación del turno es el total de bolos tirados
     [Test]
-    public void scoreIsTheNumberOfKnockedDownIfPinsCountIsLessThanTen()
+    public void Has_Score_EqualTo_TheNumberOfKnockedDown()
     {
         Frame frame = new Frame();
 
@@ -40,50 +40,50 @@ public class FrameShould
     //si en un turno el jugador tira los 10 bolos (un spare)
     //la puntuación es 10 más el número de bolos tirados en la siguiente tirada (del siguiente turno)
     [Test]
-    public void scoreIsTenPlusNextKnockDownCountOnSpare() {
-        Frame frame = new Frame();
+    public void Has_Score_EqualTo_TenPlusNextKnockDownCountOnSpare() {
+        Frame frame1 = new Frame();
         Frame frame2 = new Frame();
 
-        frame.NextFrame = frame2;
-        frame.KnockDown(8);
-        frame.KnockDown(2);
+        frame1.NextFrame = frame2;
+        frame1.KnockDown(8);
+        frame1.KnockDown(2);
         frame2.KnockDown(2);
         frame2.KnockDown(2);
 
-        Assert.AreEqual(12, frame.Score);
+        Assert.AreEqual(12, frame1.Score);
     }
 
     //si en la primera tirada del turno tira los 10 bolos (un strike)
     //el turno acaba y la puntuación es 10 más el número de bolos de las 2 jugadas siguientes
     [Test]
-    public void scoreIsTenPlusNextFrameScoreOnStrike() {
-        Frame frame = new Frame();
+    public void Has_Score_EqualTo_TenPlusNextFrameScoreOnStrike() {
+        Frame frame1 = new Frame();
         Frame frame2 = new Frame();
 
-        frame.NextFrame = frame2;
-        frame.KnockDown(10);
+        frame1.NextFrame = frame2;
+        frame1.KnockDown(10);
         frame2.KnockDown(1);
         frame2.KnockDown(3);
 
-        Assert.AreEqual(14, frame.Score);
+        Assert.AreEqual(14, frame1.Score);
     }
 
     [Test]
-    public void scoreIsTenPlusNextTwoBallsScoreOnTwoStrikes()
+    public void Has_Score_EqualTo_TenPlusNextTwoBallsOnTwoStrikes()
     {
-        Frame frame = new Frame();
+        Frame frame1 = new Frame();
         Frame frame2 = new Frame();
         Frame frame3 = new Frame();
 
-        frame.NextFrame = frame2;
+        frame1.NextFrame = frame2;
         frame2.NextFrame = frame3;
-        frame.KnockDown(10);
+        frame1.KnockDown(10);
         frame2.KnockDown(10);
         frame3.KnockDown(2);
         frame3.KnockDown(2);
 
 
-        Assert.AreEqual(22, frame.Score);
+        Assert.AreEqual(22, frame1.Score);
     }
 
     //si el jugador logra un spare o un strike en el último turno,
@@ -91,7 +91,7 @@ public class FrameShould
     //Esas tiradas cuentan como parte del mismo turno (el décimo).
     //SPARE
     [Test]
-    public void whenIsLastFrameAndWasSparePlayerHasOneMoreBall() {
+    public void Has_OneMoreBall_When_IsLastFrameAndWasSparePlayer() {
         Frame lastFrame = new Frame();
 
         lastFrame.KnockDown(5);
@@ -105,7 +105,7 @@ public class FrameShould
     //Esas tiradas cuentan como parte del mismo turno (el décimo).
     //STRIKE
     [Test]
-    public void whenIsLastFrameAndWasStrikePlayerHasTwoMoreBalls()
+    public void Has_TwoMoreBalls_When_IsLastFrameAndWasStrikePlayer()
     {
         Frame lastFrame = new Frame();
 
@@ -117,7 +117,7 @@ public class FrameShould
     //el proceso no se repite, es decir que no se vuelven a generar más
     //lanzamientos de  bonificación.
     [Test]
-    public void whenIsLastFrameAndHasTwoStrikesHasNotMoreBalls()
+    public void HasNot_MoreBalls_When_IsLastFrameAndHasTwoStrikes()
     {
         Frame lastFrame = new Frame();
 
@@ -128,7 +128,7 @@ public class FrameShould
     }
 
     [Test]
-    public void whenIsLastFrameAndHasStrikeAndSpareHasNotMoreBalls()
+    public void HasNot_MoreBalls_When_IsLastFrameAndHasStrikeAndSpare()
     {
         Frame lastFrame = new Frame();
 
@@ -143,7 +143,7 @@ public class FrameShould
     //a la  puntuación del turno final.
 
     [Test]
-    public void whenIsLastFrameAndHasBonusTheScoreIsAddedToFinalFrameScore()
+    public void Has_Score_EqualTo_AllKnockedDown_When_IsLastFrame()
     {
         Frame lastFrame = new Frame();
 
