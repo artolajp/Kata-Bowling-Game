@@ -4,21 +4,17 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-public class FrameShould
-{
+public class FrameShould{
 
     //hay 10 bolos que se intentan tirar en cada turno
-
     [Test]
-    public void Has_TenPins()
-    {
-        Assert.AreEqual(10,Frame.PINS_COUNT);
+    public void Has_TenPins() {
+        Assert.AreEqual(10, Frame.PINS_COUNT);
     }
 
     //en cada turno el jugador hace 2 tiradas
     [Test]
-    public void Has_TwoBalls()
-    {
+    public void Has_TwoBalls() {
         Frame frame = new Frame();
         Assert.AreEqual(2, frame.Balls.Length);
     }
@@ -26,8 +22,7 @@ public class FrameShould
     //si en un turno el jugador no tira los 10 bolos,
     //la puntuación del turno es el total de bolos tirados
     [Test]
-    public void Has_Score_EqualTo_TheNumberOfKnockedDown()
-    {
+    public void Has_Score_EqualTo_TheNumberOfKnockedDown() {
         Frame frame = new Frame();
 
         frame.KnockDown(8);
@@ -67,8 +62,7 @@ public class FrameShould
     }
 
     [Test]
-    public void Has_Score_EqualTo_TenPlusNextTwoBallsOnTwoStrikes()
-    {
+    public void Has_Score_EqualTo_TenPlusNextTwoBallsOnTwoStrikes() {
         Frame frame1 = new Frame();
         Frame frame2 = new Frame();
         Frame frame3 = new Frame();
@@ -79,7 +73,6 @@ public class FrameShould
         frame2.KnockDown(10);
         frame3.KnockDown(2);
         frame3.KnockDown(2);
-
 
         Assert.AreEqual(22, frame1.Score);
     }
@@ -103,20 +96,19 @@ public class FrameShould
     //Esas tiradas cuentan como parte del mismo turno (el décimo).
     //STRIKE
     [Test]
-    public void Has_TwoMoreBalls_When_IsLastFrameAndWasStrikePlayer()
-    {
+    public void Has_TwoMoreBalls_When_IsLastFrameAndWasStrikePlayer() {
         Frame lastFrame = new Frame();
 
         lastFrame.KnockDown(10);
 
         Assert.AreEqual(3, lastFrame.Balls.Length);
     }
+
     //Si en las tiradas de bonificación el jugador derriba todos los bolos,
     //el proceso no se repite, es decir que no se vuelven a generar más
     //lanzamientos de  bonificación.
     [Test]
-    public void HasNot_MoreBalls_When_IsLastFrameAndHasTwoStrikes()
-    {
+    public void HasNot_MoreBalls_When_IsLastFrameAndHasTwoStrikes() {
         Frame lastFrame = new Frame();
 
         lastFrame.KnockDown(10);
@@ -126,8 +118,7 @@ public class FrameShould
     }
 
     [Test]
-    public void HasNot_MoreBalls_When_IsLastFrameAndHasStrikeAndSpare()
-    {
+    public void HasNot_MoreBalls_When_IsLastFrameAndHasStrikeAndSpare() {
         Frame lastFrame = new Frame();
 
         lastFrame.KnockDown(10);
@@ -139,10 +130,8 @@ public class FrameShould
 
     //Nota: el puntaje generado en las tiradas de bonificación se suma
     //a la  puntuación del turno final.
-
     [Test]
-    public void Has_Score_EqualTo_AllKnockedDown_When_IsLastFrame()
-    {
+    public void Has_Score_EqualTo_AllKnockedDown_When_IsLastFrame() {
         Frame lastFrame = new Frame();
 
         lastFrame.KnockDown(10);

@@ -10,54 +10,42 @@ public class GameShould
     Game game;
 
     [SetUp]
-    public void Before()
-    {
-        //given
+    public void Before() {
         game = new Game();
     }
 
     //cada partida se compone de 10 turnos
     [Test]
-    public void Has_TenFrames()
-    {
-        //then
+    public void Has_TenFrames() {
         Assert.AreEqual(10, game.frames.Length);
     }
 
     [Test]
-    public void Has_NextFrame_ForEachFrame_WhenIsNotTheLastOne()
-    {
-        //Then
-        for (int frame = 0; frame < game.frames.Length - 1; frame++)
-        {
+    public void Has_NextFrame_ForEachFrame_WhenIsNotTheLastOne() {
+        for (int frame = 0; frame < game.frames.Length - 1; frame++) {
             Assert.IsNotNull(game.frames[frame].NextFrame);
         }
     }
 
     [Test]
-    public void Has_LastFrame_WithoutNextFrame()
-    {
-        //Then
+    public void Has_LastFrame_WithoutNextFrame() {
         Assert.IsNull(game.frames[game.frames.Length - 1].NextFrame);
     }
 
     [Test]
-    public void HasNot_Score_AtBeginning()
-    {
+    public void HasNot_Score_AtBeginning() {
         Assert.AreEqual(0, game.Score);
     }
 
     [Test]
-    public void Has_Score_EqualTo_FirstFrameBalls_WhenNoStrike()
-    {
+    public void Has_Score_EqualTo_FirstFrameBalls_WhenNoStrike() {
         game.Roll(6);
 
         Assert.AreEqual(6, game.Score);
     }
 
     [Test]
-    public void Has_Score_Equals_AllFrameBalls_WhenNoStrikesOrSpares()
-    {
+    public void Has_Score_Equals_AllFrameBalls_WhenNoStrikesOrSpares() {
         game.Roll(6);
         game.Roll(2);
 
@@ -65,8 +53,7 @@ public class GameShould
     }
 
     [Test]
-    public void Has_Score_EqualTo_AllFrameScores_WhenNoStrikesOrSpares()
-    {
+    public void Has_Score_EqualTo_AllFrameScores_WhenNoStrikesOrSpares() {
         game.Roll(6);
         game.Roll(2);
         game.Roll(2);
@@ -78,8 +65,7 @@ public class GameShould
     }
 
     [Test]
-    public void Has_Score_EqualTo_AllFrameScoresPlusStrikeScore_WhenStrikes()
-    {
+    public void Has_Score_EqualTo_AllFrameScoresPlusStrikeScore_WhenStrikes() {
         game.Roll(6);
         game.Roll(0);
         game.Roll(10);
@@ -91,7 +77,6 @@ public class GameShould
     }
 
     //X X X X X X X X X X X X(12 rolls: 12 strikes) = 10 frames* 30 points = 300
-
     [Test]
     public void Has_Score_EqualsTo_300_when_rollsTwelvesStrikes() {
         for (int i = 0; i < 12; i++) {
@@ -125,7 +110,6 @@ public class GameShould
     // 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/5 (21 rolls: 10 pairs of 5 and spare, with a final 5) = 10 frames* 15 points = 150
     [Test]
     public void Has_Score_EqualsTo_AHundredFifty_when_rollsFivePinsTwentyOneTimes() {
-
         for (int i = 0; i < 21; i++) {
             game.Roll(5);
         }
@@ -135,7 +119,6 @@ public class GameShould
 
     [Test]
     public void BeFinished_When_LastFrameIsFinished() {
-
         for (int i = 0; i < 12; i++) {
             game.Roll(10);
         }
