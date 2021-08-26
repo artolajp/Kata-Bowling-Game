@@ -17,7 +17,7 @@ public class Frame
     private bool isFinished;
     public bool IsFinished { get => isFinished; }
     public bool IsStrike { get => Balls[0] == PINS_COUNT; }
-    public bool IsSpare { get => Balls[0] + Balls[1] == PINS_COUNT && !IsStrike; }
+    public bool IsSpare { get => Balls.Length > 1 && Balls[0] + Balls[1] == PINS_COUNT && !IsStrike; }
 
     public int Score {
         get {

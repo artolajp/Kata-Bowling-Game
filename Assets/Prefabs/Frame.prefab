@@ -852,12 +852,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frameNumberLabel: {fileID: 432755548187172751}
   frameScoreLabel: {fileID: 2939127731550475986}
-  ball1Label: {fileID: 1591548094055262412}
-  ball2Label: {fileID: 759379251889411563}
-  ball3Label: {fileID: 4067886527001732875}
-  ball1Container: {fileID: 7135364845600411060}
-  ball2Container: {fileID: 3115101739391303747}
-  ball3Container: {fileID: 4446248277437013917}
+  ballLabels:
+  - {fileID: 1591548094055262412}
+  - {fileID: 759379251889411563}
+  - {fileID: 4067886527001732875}
+  ballContainers:
+  - {fileID: 7135364845600411060}
+  - {fileID: 3115101739391303747}
+  - {fileID: 4446248277437013917}
 --- !u!1 &7750694777232981989
 GameObject:
   m_ObjectHideFlags: 0

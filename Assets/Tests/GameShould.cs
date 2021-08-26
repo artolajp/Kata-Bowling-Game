@@ -102,6 +102,7 @@ public class GameShould
 
         for (int i = 0; i < 10; i++) {
             game.Roll(9);
+            game.Roll(0);
         }
 
         Assert.AreEqual(90, game.Score);
