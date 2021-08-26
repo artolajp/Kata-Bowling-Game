@@ -1,9 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class GamePresenter : MonoBehaviour
+public class GamePresenter
 {
     private IGameView gameView;
 
@@ -27,7 +22,6 @@ public class GamePresenter : MonoBehaviour
         for (int i = 0; i < game.frames.Length; i++) {
             gameView.DrawFrame(i + 1, game.frames[i].Score, game.frames[i].Balls, game.frames[i].CurrentBall, game.frames[i].IsStrike, game.frames[i].IsSpare);
         }
-
     }
 
     private int[] ParseInputs(string text) {
@@ -41,7 +35,7 @@ public class GamePresenter : MonoBehaviour
         return arrayOfInputs;
     }
 
-    internal void Roll(int pins) {
+    public void Roll(int pins) {
         game.Roll(pins);
         DrawResults();
     }
