@@ -6,6 +6,8 @@ public class Frame
     private const int BALLS_COUNT = 2;
 
     private int currentBall = 0;
+    public int CurrentBall { get => currentBall; }
+
 
     private int[] balls;
     public int[] Balls { get => balls; protected set => balls = value; }
@@ -36,6 +38,7 @@ public class Frame
 
     public int NextSecondBallScore =>
         NextFrame.IsStrike ? NextFrame.NextBallScore : NextFrame.Balls[1];
+
 
     public Frame() {
         Balls = new int[BALLS_COUNT];

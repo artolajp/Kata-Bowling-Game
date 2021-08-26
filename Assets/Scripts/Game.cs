@@ -35,6 +35,9 @@ public class Game
     }
 
     public void Roll(int knockedDown) {
+        if (CurrentFrame >= frames.Length)
+            return;
+
         frames[CurrentFrame].KnockDown(knockedDown);
         if (frames[CurrentFrame].IsFinished) CurrentFrame++;
     }
