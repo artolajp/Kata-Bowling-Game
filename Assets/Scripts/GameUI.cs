@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameUI : MonoBehaviour
+public class GameUI : MonoBehaviour, IGameView
 {
     [SerializeField] private Transform framesContainer;
     private List<FrameUI> frameUIs;
@@ -15,54 +15,48 @@ public class GameUI : MonoBehaviour
 
     [SerializeField] private float animationTime = 0.1f;
 
-    private Game game;
+    private GamePresenter presenter;
 
-    void Start() {
-        rollsInput.text = "5,3,10,6,0,2,5,6,4,4,0,0,0,6,3,2,8,10,10,10";
-
+    private void Awake() {
         frameUIs = new List<FrameUI>(framesContainer.GetComponentsInChildren<FrameUI>());
-
-        runButton.onClick.AddListener(RunGame);
-
-        RunGame();
+        runButton.onClick.AddListener(OnRunGameClick);
     }
 
-    private void RunGame() {
+    private void Start() {
+        presenter = new GamePresenter();
+        presenter.Initialize(this);
+    }
+
+    public void Initialize(GamePresenter presenter, string initalGame) {
+        this.presenter = presenter;
+        rollsInput.text = initalGame;
+        presenter.RunGame(rollsInput.text);
+    }
+
+    public void OnRunGameClick() {
         StopCoroutine(nameof(rollsRutine));
-
-        game = new Game();
-        DrawResults(game);
-
-        StartCoroutine(rollsRutine(ParseInputs(rollsInput.text)));
+        presenter.RunGame(rollsInput.text);
     }
 
-    private int[] ParseInputs(string text) {
-        var splittedText = text.Split(',');
-        var arrayOfInputs = new int[splittedText.Length];
-
-        for (int i = 0; i < splittedText.Length; i++) {
-            arrayOfInputs[i] = int.Parse(splittedText[i]);
-        }
-
-        return arrayOfInputs;
+    public void RunGame(int[] rolls) {
+        StartCoroutine(rollsRutine(rolls));
     }
+
 
     private IEnumerator rollsRutine(int[] rolls) {
         yield return new WaitForSeconds(1);
 
         foreach (var pins in rolls) {
-            game.Roll(pins);
-            DrawResults(game);
+            presenter.Roll(pins);
             yield return new WaitForSeconds(animationTime);
         }
-
     }
 
-    private void DrawResults(Game game) {
-        for (int i = 0; i < game.frames.Length; i++) {
-            frameUIs[i].Initialize(i + 1, game.frames[i].Score, game.frames[i].Balls, game.frames[i].CurrentBall, game.frames[i].IsStrike, game.frames[i].IsSpare);
-        }
-        scoreText.text = game.Score.ToString();
+    public void DrawFrame(int frameNumber, int frameScore, int[] balls, int currentBall, bool isStrike, bool isSpare) {
+        frameUIs[frameNumber - 1].Initialize(frameNumber, frameScore, balls, currentBall, isStrike, isSpare);
     }
 
+    public void DrawScore(int score) {
+        scoreText.text = score.ToString();
+    }
 }

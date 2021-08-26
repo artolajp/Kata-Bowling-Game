@@ -88,7 +88,6 @@ public class GameShould
 
     [Test]
     public void Has_Score_EqualsTo_30_OnPenultimateFrame_when_rollsTwelvesStrikes() {
-
         for (int i = 0; i < 12; i++) {
             game.Roll(10);
         }
